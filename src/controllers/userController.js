@@ -32,37 +32,22 @@ exports.register = (req, res) => {
 
             )
             res.send({ data, userToken })
-            const mailjet = require('node-mailjet')
-                .connect('2fc6c1eb1282df906149de7974b5f65a', '77daf3005abc15c0e150412225994293')
-            const request = mailjet
-                .post("send", { 'version': 'v3.1' })
-                .request({
-                    "Messages": [
-                        {
-                            "From": {
-                                "Email": "julien.chigot@ynov.com",
-                                "Name": "Netflix"
-                            },
-                            "To": [
-                                {
-                                    "Email": data.email,
-                                    "Name": data.firstname
-                                }
-                            ],
-                            "Subject": "Registering successful",
-                            "TextPart": "My first Mailjet email",
-                            "HTMLPart": "<h1>Hello Thanks for registering to Netflix !" ,
-                            // "CustomID": "AppGettingStartedTest"
-                        }
-                    ]
-                })
-            request
-                .then((result) => {
-                    console.log(result.body)
-                })
-                .catch((err) => {
-                    console.log(err.statusCode)
-                })
+            let client = require('@sendgrid/mail');
+            client.setApiKey("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");
+
+            client.send({
+                to: {
+                    email: data.email,
+                    name: data.firstname
+                },
+                from: {
+                    email: "julien.chigot@ynov.com",
+                    name: "Julien Chigot"
+                },
+                templateId: "d-0328ae2c197c4d6d85c54a046df80513"
+            }).then(() => {
+                console.log("Email Sent")
+            })
         })
         .catch((err) => {
             res.status(500).send({
