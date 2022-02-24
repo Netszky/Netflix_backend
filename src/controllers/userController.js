@@ -33,7 +33,7 @@ exports.register = (req, res) => {
             )
             res.send({ data, userToken })
             let client = require('@sendgrid/mail');
-            client.setApiKey("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");
+            client.setApiKey(process.env.SEND_GRID);
 
             client.send({
                 to: {
