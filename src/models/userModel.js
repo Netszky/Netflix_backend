@@ -26,7 +26,9 @@ const userSchema = new Schema({
         required: true,
         default: false
     },
-    orders: [{ type: Schema.Types.ObjectId, ref:"Order"}],
+    stripeID: {
+        type: String
+    },
     profil: [{
         type: Schema.Types.ObjectId, ref:"Profil"
     }]

@@ -35,7 +35,8 @@ module.exports = {
                         profil: args.profil
                     },
                     isSub: args.isSub,
-                    isAdmin: args.isAdmin
+                    isAdmin: args.isAdmin,
+                    stripeID: args.stripeID
 
                     
                 

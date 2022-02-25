@@ -39,38 +39,29 @@ exports.stripewebhook = (req, res) => {
                 }
             }, { omitUndefined: true }).then((data) => {
                 console.log("UPDATED", data.isSub)
+            }).then(() => {
+                let client = require('@sendgrid/mail');
+                client.setApiKey(process.env.SEND_GRID);
+
+                client.send({
+                    to: {
+                        email: data.object.metadata.email,
+                        name: data.firstname
+                    },
+                    from: {
+                        email: "julien.chigot@ynov.com",
+                        name: "Julien Chigot"
+                    },
+                    templateId: "d-5304813abf6c4ab580c29287372e5ca3",
+                    dynamicTemplateData: {
+                        name: data.firstname,
+                        email: data.email
+                    }
+                }).then(() => {
+                    console.log("Email Sent")
+                })
             })
-            const mailjet = require('node-mailjet')
-                .connect('2fc6c1eb1282df906149de7974b5f65a', '77daf3005abc15c0e150412225994293')
-            const request = mailjet
-                .post("send", { 'version': 'v3.1' })
-                .request({
-                    "Messages": [
-                        {
-                            "From": {
-                                "Email": "julien.chigot@ynov.com",
-                                "Name": "Julien"
-                            },
-                            "To": [
-                                {
-                                    "Email": data.object.metadata.email,
-                                    "Name": "Julien"
-                                }
-                            ],
-                            "Subject": "thanks for subscribing to Netflix",
-                            "TextPart": "My first Mailjet email",
-                            "HTMLPart": "<h3>Dear passenger 1, welcome to <a href='https://www.mailjet.com/'>Mailjet</a>!</h3><br />May the delivery force be with you!",
-                            "CustomID": "AppGettingStartedTest"
-                        }
-                    ]
-                })
-            request
-                .then((result) => {
-                    console.log(result.body)
-                })
-                .catch((err) => {
-                    console.log(err.statusCode)
-                })
+
             // const newOrder = new Order ({
             //     amout: data.object.amount/100,
             //     date: data.object.created,
