@@ -33,67 +33,56 @@ exports.stripewebhook = (req, res) => {
     switch (eventType) {
         case "customer.subscription.created":
             console.log(data)
-            // let newSub = new Sub({
-            //     price: data.object.metadata
-            // })
-            // newSub.save()
-            //     .then((datasub) => {
-            //         User.findByIdAndUpdate(data.object.metadata.userId, {
-            //             sub: datasub._id,
-            //             $set: {
-            //                 isSub: true
-            //             }
-            //         }, { omitUndefined: true }).then((data) => {
-            //             console.log("UPDATED", data.isSub)
-            //         }).then(() => {
-            //             let client = require('@sendgrid/mail');
-            //             client.setApiKey(process.env.SEND_GRID);
+            let newSub = new Sub({
+                price: data.plan.amout/100,
+                type: data.plan.id
+            })
+            newSub.save()
+                .then((datasub) => {
+                    User.findByIdAndUpdate(data.object.metadata.userId, {
+                        sub: datasub._id,
+                        $set: {
+                            isSub: true
+                        }
+                    }, { omitUndefined: true }).then((data) => {
+                        console.log("UPDATED", data.isSub)
+                    }).then(() => {
+                        let client = require('@sendgrid/mail');
+                        client.setApiKey(process.env.SEND_GRID);
 
-            //             client.send({
-            //                 to: {
-            //                     email: data.object.metadata.email,
-            //                     name: data.firstname
-            //                 },
-            //                 from: {
-            //                     email: "julien.chigot@ynov.com",
-            //                     name: "Julien Chigot"
-            //                 },
-            //                 templateId: "d-5304813abf6c4ab580c29287372e5ca3",
-            //                 dynamicTemplateData: {
-            //                     name: data.firstname,
-            //                     email: data.email
-            //                 }
-            //             }).then(() => {
-            //                 console.log("Email Sent")
-            //             })
-            //         })
-            //     })
+                        client.send({
+                            to: {
+                                email: data.object.metadata.email,
+                            },
+                            from: {
+                                email: "julien.chigot@ynov.com",
+                                name: "Julien Chigot"
+                            },
+                            templateId: "d-99ddfc49fe9f4b96b612a36d97762fc3",
+                            dynamicTemplateData: {
+                                amout: data.plan.amout/100
+                            }
+                        }).then(() => {
+                            console.log("Email Sent")
+                        })
+                    })
+                })
 
-            // const newOrder = new Order ({
-            //     amout: data.object.amount/100,
-            //     date: data.object.created,
-            //     user: data.object.metadata.userId,
-            //     products: productIdArray,
-            //     stripeId: data.object.id,
-            //     status: data.object.status
-            // });
-            // newOrder.save().then(() => console.log(data)).catch((err) => console.log(err));
+            const newOrder = new Order ({
+                amout: data.object.amount/100,
+                date: data.object.created,
+                user: data.object.metadata.userId,
+                products: productIdArray,
+                stripeId: data.object.id,
+                status: data.object.status
+            });
+            newOrder.save().then(() => console.log(data)).catch((err) => console.log(err));
             break;
         // case "invoice.payment_succeeded":
         //     console.log("Ohzaoiodjzaio", data.object.metadata.userId)
         //     return User.findByIdAndUpdate(data.object.metadata.userId, {
         //         isSub: true
         //     }, { omitUndefined: true })
-        //     // const newOrder = new Order ({
-        //     //     amout: data.object.amount/100,
-        //     //     date: data.object.created,
-        //     //     user: data.object.metadata.userId,
-        //     //     products: productIdArray,
-        //     //     stripeId: data.object.id,
-        //     //     status: data.object.status
-        //     // });
-        //     // newOrder.save().then(() => console.log(data)).catch((err) => console.log(err));
-        //     break;
         default:
     }
     res.sendStatus(200);
