@@ -22,6 +22,7 @@ const initiateStripeSession = async (req) => {
   return subscription;
 }
 
+
 exports.createSession = async function (req, res) {
   try {
     const subscription = await initiateStripeSession(req)
@@ -32,3 +33,9 @@ exports.createSession = async function (req, res) {
     res.status(500).json(err);
   }
 };
+exports.cancel = async function (req, res){
+  const deleted = await stripe.subscriptions.del(
+    req.body
+  );
+  res.status(200).json(deleted)
+}
