@@ -4,13 +4,13 @@ const bcrypt = require('bcrypt');
 module.exports = {
     Query: {
         getUsers: () => {
-            return User.find({})
+            return User.find({});
         },
         getUser: (parent, args) => {
-            return User.findById(args.id).populate("sub")
+            return User.findById(args.id).populate("sub");
         },
         getUserProfil: (parent, args, context) => {
-            return User.findById(context.userId).populate("profil")
+            return User.findById(context.userId).populate("profil");
         }
     },
     Mutation: {

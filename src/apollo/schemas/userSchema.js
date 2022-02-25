@@ -14,7 +14,7 @@ module.exports = gql `
     }
     type Query {
         getUsers:[User]
-        getUser(id:ID!):User
+        getUser(id:ID):User
         getUserProfil:User
     }
     type Message {
