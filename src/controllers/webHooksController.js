@@ -32,14 +32,9 @@ exports.stripewebhook = (req, res) => {
 
     switch (eventType) {
         case "customer.subscription.created":
-            console.log("object", data.object.id)
-            console.log("mail",data.object.metadata.email)
-            console.log("amout",data.object.plan.amount)
-            console.log("id",data.object.plan.id)
-            console.log("user",data.object.metadata.id)
             let newSub = new Sub({
-                price: data.plan.amout/100,
-                type: data.plan.id
+                price: data.object.plan.amount/100,
+                type: data.object.plan.id
             })
             newSub.save()
                 .then((datasub) => {
@@ -47,7 +42,8 @@ exports.stripewebhook = (req, res) => {
                         sub: datasub._id,
                         $set: {
                             isSub: true
-                        }
+                        },
+                        stripeID: data.object.id
                     }, { omitUndefined: true }).then((data) => {
                         console.log("UPDATED", data.isSub)
                     }).then(() => {
@@ -64,7 +60,7 @@ exports.stripewebhook = (req, res) => {
                             },
                             templateId: "d-99ddfc49fe9f4b96b612a36d97762fc3",
                             dynamicTemplateData: {
-                                amount: data.plan.amout/100
+                                amount: data.object.plan.amount/100
                             }
                         }).then(() => {
                             console.log("Email Sent")
