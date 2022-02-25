@@ -32,7 +32,7 @@ exports.stripewebhook = (req, res) => {
 
     switch (eventType) {
         case "customer.subscription.created":
-            console.log(data)
+            console.log(data.plan.amount, data.plan.id, data.object.metadata.email)
             let newSub = new Sub({
                 price: data.plan.amout/100,
                 type: data.plan.id
@@ -60,7 +60,7 @@ exports.stripewebhook = (req, res) => {
                             },
                             templateId: "d-99ddfc49fe9f4b96b612a36d97762fc3",
                             dynamicTemplateData: {
-                                amout: data.plan.amout/100
+                                amount: data.plan.amout/100
                             }
                         }).then(() => {
                             console.log("Email Sent")
