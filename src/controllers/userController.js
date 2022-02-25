@@ -44,7 +44,11 @@ exports.register = (req, res) => {
                     email: "julien.chigot@ynov.com",
                     name: "Julien Chigot"
                 },
-                templateId: "d-5304813abf6c4ab580c29287372e5ca3"
+                templateId: "d-5304813abf6c4ab580c29287372e5ca3",
+                dynamicTemplateData: {
+                    name: data.firstname,
+                    email: data.email
+                }
             }).then(() => {
                 console.log("Email Sent")
             })
