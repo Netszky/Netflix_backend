@@ -44,7 +44,7 @@ exports.register = (req, res) => {
                     email: "julien.chigot@ynov.com",
                     name: "Julien Chigot"
                 },
-                templateId: "d-0328ae2c197c4d6d85c54a046df80513"
+                templateId: "d-5304813abf6c4ab580c29287372e5ca3"
             }).then(() => {
                 console.log("Email Sent")
             })
