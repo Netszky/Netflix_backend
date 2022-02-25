@@ -6,7 +6,7 @@ exports.stripewebhook = (req, res) => {
     let data;
     let eventType;
 
-    const webhookSecret = "whsec_e3646a0531ed042db036a90c51f7edac06cceca88b1c18a4044454cb84eeca43";
+    const webhookSecret = "whsec_qfvMIf3LlYOUhMrXoMOccJFvJwdCPK4w";
 
     if (webhookSecret) {
         let event;
