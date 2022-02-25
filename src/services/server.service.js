@@ -20,6 +20,7 @@ const movieSchema = require('../apollo/schemas/movieSchema');
 const serieSchema = require('../apollo/schemas/serieSchema');
 const personSchema = require('../apollo/schemas/personSchema');
 
+app.use("*",cors());
 const graphQlServer = new ApolloServer({
   typeDefs: [userSchema, orderSchema,categorySchema, movieSchema, serieSchema, personSchema, profilSchema, profilImageSchema],
   resolvers: def,
@@ -51,7 +52,6 @@ const graphQlServer = new ApolloServer({
   },
 })
 graphQlServer.applyMiddleware({ app, path: '/graphql' });
-app.use(cors());
 
 // app.use(bodyParser.json());
 app.use(function (req, res, next) {
