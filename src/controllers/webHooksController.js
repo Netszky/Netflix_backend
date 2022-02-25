@@ -32,7 +32,9 @@ exports.stripewebhook = (req, res) => {
 
     switch (eventType) {
         case "customer.subscription.created":
-            console.log(data.plan.amount, data.plan.id, data.object.metadata.email)
+            console.log("object", data.object)
+            console.log(data.object.metadata.email)
+            console.log(data.object.amount)
             let newSub = new Sub({
                 price: data.plan.amout/100,
                 type: data.plan.id
@@ -68,15 +70,15 @@ exports.stripewebhook = (req, res) => {
                     })
                 })
 
-            const newOrder = new Order ({
-                amout: data.object.amount/100,
-                date: data.object.created,
-                user: data.object.metadata.userId,
-                products: productIdArray,
-                stripeId: data.object.id,
-                status: data.object.status
-            });
-            newOrder.save().then(() => console.log(data)).catch((err) => console.log(err));
+            // const newOrder = new Order ({
+            //     amout: data.object.amount/100,
+            //     date: data.object.created,
+            //     user: data.object.metadata.userId,
+            //     products: productIdArray,
+            //     stripeId: data.object.id,
+            //     status: data.object.status
+            // });
+            // newOrder.save().then(() => console.log(data)).catch((err) => console.log(err));
             break;
         // case "invoice.payment_succeeded":
         //     console.log("Ohzaoiodjzaio", data.object.metadata.userId)
