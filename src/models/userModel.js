@@ -29,6 +29,9 @@ const userSchema = new Schema({
     stripeID: {
         type: String
     },
+    sub: {
+        type: Schema.Types.ObjectId, ref:"Sub"
+    },
     profil: [{
         type: Schema.Types.ObjectId, ref:"Profil"
     }]

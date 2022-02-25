@@ -1,6 +1,6 @@
 const stripe = require("stripe")(process.env.STRIPE_KEY);
-const Order = require("../models/orderModel");
 const User = require("../models/userModel");
+const Sub = require("../models/subModel");
 exports.stripewebhook = (req, res) => {
 
     let data;
@@ -33,34 +33,41 @@ exports.stripewebhook = (req, res) => {
     switch (eventType) {
         case "customer.subscription.created":
             console.log(data)
-            User.findByIdAndUpdate(data.object.metadata.userId, {
-                $set: {
-                    isSub: true
-                }
-            }, { omitUndefined: true }).then((data) => {
-                console.log("UPDATED", data.isSub)
-            }).then(() => {
-                let client = require('@sendgrid/mail');
-                client.setApiKey(process.env.SEND_GRID);
+            // let newSub = new Sub({
+            //     price: data.object.metadata
+            // })
+            // newSub.save()
+            //     .then((datasub) => {
+            //         User.findByIdAndUpdate(data.object.metadata.userId, {
+            //             sub: datasub._id,
+            //             $set: {
+            //                 isSub: true
+            //             }
+            //         }, { omitUndefined: true }).then((data) => {
+            //             console.log("UPDATED", data.isSub)
+            //         }).then(() => {
+            //             let client = require('@sendgrid/mail');
+            //             client.setApiKey(process.env.SEND_GRID);
 
-                client.send({
-                    to: {
-                        email: data.object.metadata.email,
-                        name: data.firstname
-                    },
-                    from: {
-                        email: "julien.chigot@ynov.com",
-                        name: "Julien Chigot"
-                    },
-                    templateId: "d-5304813abf6c4ab580c29287372e5ca3",
-                    dynamicTemplateData: {
-                        name: data.firstname,
-                        email: data.email
-                    }
-                }).then(() => {
-                    console.log("Email Sent")
-                })
-            })
+            //             client.send({
+            //                 to: {
+            //                     email: data.object.metadata.email,
+            //                     name: data.firstname
+            //                 },
+            //                 from: {
+            //                     email: "julien.chigot@ynov.com",
+            //                     name: "Julien Chigot"
+            //                 },
+            //                 templateId: "d-5304813abf6c4ab580c29287372e5ca3",
+            //                 dynamicTemplateData: {
+            //                     name: data.firstname,
+            //                     email: data.email
+            //                 }
+            //             }).then(() => {
+            //                 console.log("Email Sent")
+            //             })
+            //         })
+            //     })
 
             // const newOrder = new Order ({
             //     amout: data.object.amount/100,

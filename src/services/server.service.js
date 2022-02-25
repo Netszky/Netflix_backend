@@ -9,9 +9,9 @@ const app = express();
 
 const categorySchema = require('../apollo/schemas/categorySchema');
 const userSchema = require('../apollo/schemas/userSchema');
-const orderSchema = require('../apollo/schemas/orderSchema');
 const profilSchema = require('../apollo/schemas/profilSchema');
 const profilImageSchema = require ('../apollo/schemas/profilImageSchema');
+const subSchema = require('../apollo/schemas/subSchema');
 const def = require('../apollo/resolvers');
 
 
@@ -22,7 +22,7 @@ const personSchema = require('../apollo/schemas/personSchema');
 
 app.use("*",cors());
 const graphQlServer = new ApolloServer({
-  typeDefs: [userSchema, orderSchema,categorySchema, movieSchema, serieSchema, personSchema, profilSchema, profilImageSchema],
+  typeDefs: [userSchema,categorySchema, movieSchema, serieSchema, personSchema, profilSchema, profilImageSchema, subSchema],
   resolvers: def,
   context: ({ req }) => {
     const token = req.headers.authorization || 'no token';

@@ -10,6 +10,7 @@ module.exports = gql `
         isSub: Boolean
         isAdmin: Boolean
         stripeID: String
+        Sub: Sub
     }
     type Query {
         getUsers:[User]
@@ -36,7 +37,7 @@ module.exports = gql `
     }
     type Mutation {
         createUser(User: createUserInput): User
-        updateUser(id: ID, firstname: String, email: String,password: String,profil: ID, isSub:Boolean, isAdmin:Boolean, stripeID:String): User
+        updateUser(id: ID, firstname: String, email: String,password: String,profil: ID, isSub:Boolean, isAdmin:Boolean, stripeID:String, sub:ID): User
         deleteUser(id: ID): Message
     }
 `

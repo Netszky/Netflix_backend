@@ -7,7 +7,7 @@ module.exports = {
             return User.find({})
         },
         getUser: (parent, args) => {
-            return User.findById(args.id)
+            return User.findById(args.id).populate("sub")
         },
         getUserProfil: (parent, args, context) => {
             return User.findById(context.userId).populate("profil")
