@@ -10,7 +10,7 @@ module.exports = gql `
         isSub: Boolean
         isAdmin: Boolean
         stripeID: String
-        Sub: Sub
+        sub: Sub
     }
     type Query {
         getUsers:[User]
