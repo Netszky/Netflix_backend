@@ -38,8 +38,8 @@ exports.cancel = async function (req, res){
   try {
 
     const deleted = await stripe.subscriptions.del(req.body.id)
-      res.status(200).json(deleted);
+      res.status(200).send({cancel:true});
     } catch (err) {
-      res.status(500).json(err);
+      res.status(500).send(err);
     }
 }
