@@ -35,8 +35,11 @@ exports.createSession = async function (req, res) {
 };
 exports.cancel = async function (req, res){
   console.log(req)
-  const deleted = await stripe.subscriptions.del(
-    req.body.id
-  );
-  res.status(200).json(deleted);
+  try {
+
+    const deleted = await stripe.subscriptions.del(req.body.id)
+      res.status(200).json(deleted);
+    } catch (err) {
+      res.status(500).json(err);
+    }
 }
