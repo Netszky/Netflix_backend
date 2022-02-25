@@ -34,7 +34,7 @@ exports.createSession = async function (req, res) {
   }
 };
 exports.cancel = async function (req, res){
-  console.log(req.body)
+  console.log(req)
   const deleted = await stripe.subscriptions.del(
     req.body.id
   );
