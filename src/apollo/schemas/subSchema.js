@@ -5,5 +5,6 @@ module.exports = gql`
         id: ID
         type: String
         price: String
+        date: String
     }
 `

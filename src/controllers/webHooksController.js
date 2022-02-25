@@ -32,9 +32,11 @@ exports.stripewebhook = (req, res) => {
 
     switch (eventType) {
         case "customer.subscription.created":
-            console.log("object", data.object)
-            console.log(data.object.metadata.email)
-            console.log(data.object.amount)
+            console.log("object", data.object.id)
+            console.log("mail",data.object.metadata.email)
+            console.log("amout",data.object.plan.amount)
+            console.log("id",data.object.plan.id)
+            console.log("user",data.object.metadata.id)
             let newSub = new Sub({
                 price: data.plan.amout/100,
                 type: data.plan.id
