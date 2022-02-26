@@ -34,8 +34,13 @@ module.exports = {
                     $addToSet: {
                         profil: args.profil
                     },
-                    isSub: args.isSub,
-                    isAdmin: args.isAdmin,
+                    $set: {
+                        isSub: args.isSub,
+                    },
+                    $set: {
+
+                        isAdmin: args.isAdmin,
+                    },
                     stripeID: args.stripeID
 
                     

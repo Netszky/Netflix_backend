@@ -15,8 +15,8 @@ const initiateStripeSession = async (req) => {
         email: req.body.email
        },
     },
-    success_url: `http://localhost:3000/confirmation`,
-    cancel_url: `http://localhost:3000/home`,
+    success_url: process.env.FRONT+"/confirmation",
+    cancel_url: process.env.FRONT+"/error",
     mode: 'subscription',
   });
   return subscription;
