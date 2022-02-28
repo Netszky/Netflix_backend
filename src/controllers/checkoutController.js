@@ -1,5 +1,5 @@
 const stripe = require('stripe')("sk_test_51KHUEnJslrGuoRGTedEi4dKYFGxbxahLan7SOYc3WJS3ubWa7Rs0HDjdmCW6jDLgWq4q4aUd1FwcxJ5SoIaNpHDR00hKnPvTsY");
-
+const User = require("../models/userModel");
 
 const initiateStripeSession = async (req) => {
   // const customer = await stripe.customers.create({
@@ -34,11 +34,16 @@ exports.createSession = async function (req, res) {
   }
 };
 exports.cancel = async function (req, res){
-  console.log(req)
   try {
 
     const deleted = await stripe.subscriptions.del(req.body.id)
+    User.findByIdAndUpdate(req.body.user, {
+      $set: {
+        isSub: false
+      }
+    }).then(() => {
       res.status(200).send({cancel:true});
+    })
     } catch (err) {
       res.status(500).send(err);
     }
