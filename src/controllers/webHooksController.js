@@ -83,6 +83,9 @@ exports.stripewebhook = (req, res) => {
         //     return User.findByIdAndUpdate(data.object.metadata.userId, {
         //         isSub: true
         //     }, { omitUndefined: true })
+        case "subscription_schedule.canceled": {
+            console.log(data)
+        }
         default:
     }
     res.sendStatus(200);
