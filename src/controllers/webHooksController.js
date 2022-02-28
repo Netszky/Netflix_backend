@@ -84,7 +84,7 @@ exports.stripewebhook = (req, res) => {
         //         isSub: true
         //     }, { omitUndefined: true })
         case "subscription_schedule.canceled": {
-            console.log(data.body.user);
+            console.log("ici");
         }
         default:
     }
