@@ -26,6 +26,7 @@ module.exports = {
             return user.save()
         },
         updateUser: (parent, args) => {
+            console.log(args.isSub)
             return User.findByIdAndUpdate(args.id, {
                 
                     firstname: args.firstname,
