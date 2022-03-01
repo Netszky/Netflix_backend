@@ -15,7 +15,7 @@ module.exports = {
         },
         getMoviesByCategories: (parent, args, context) => {
             const result = Movie.find({}).populate('categories').populate("director").populate("actor");
-            return result.find({categories: {$elemMatch: { name: args.categories}}});
+            return result.find({categories: args.categories});
         }
     },
 
