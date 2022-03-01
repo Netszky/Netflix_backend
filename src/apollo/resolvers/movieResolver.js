@@ -12,6 +12,10 @@ module.exports = {
         getMoviesByCategory: (parent, args, context) => {
             const result=  Movie.find({}).populate('categories').populate("director").populate("actor")
             return result.find({categories: args.categories});
+        },
+        getMoviesByCategories: (parent, args, context) => {
+            const result = Movie.find({}).populate('categories').populate("director").populate("actor");
+            return result.find({categories: args.categories});
         }
     },
 

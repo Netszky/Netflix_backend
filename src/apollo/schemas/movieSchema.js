@@ -39,6 +39,7 @@ module.exports = gql `
     extend type Query {
         getMovies:[Movie!]
         getMoviesByCategory(categories: String):[Movie]
+        getMoviesByCategories(categories: [String]):[Movie]
         getMovie(id: ID):Movie
     }
     extend type Mutation {
